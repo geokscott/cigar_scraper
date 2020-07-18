@@ -9,6 +9,7 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import concurrent.futures
 import yaml
+import os
 
 config_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'config.yaml')
 with open(config_file) as file:
