@@ -1,0 +1,6 @@
+# config.yaml file
+
+SMTP_SERVER: your_smtp_server
+SMTP_PORT: your_smtp_port
+emailuser: your_email_login
+emailpassword: your_email_password
