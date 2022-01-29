@@ -75,6 +75,7 @@ async def cleanup(x):
         x = x.replace("us$", "")
         x = x.replace("~usd", "")
         x = x.replace("$", "")
+        x = x.replace("no discounts apply", "")
         x = x.replace("slb cabinet of", "SLB")
         x = x.replace("box", "Box")
         x = x.replace("length (in inches):", "L:")
