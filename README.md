@@ -5,9 +5,9 @@ This is my first attempt at web scraping. This will scrape the https://www.cigar
 
 There are two files:
 
-cigar_scrape.py: Uses multiple threads to concurrently process the web pages. (takes about 38 seconds to process 27 page requests)
+cigar_scrape.py: Uses multiple threads. (takes about 38 seconds to process 27 page requests)
 
-cigar_scrape_async.py: Uses asycronous processing with aiohttp and asyncio. (takes about 28 seconds)
+cigar_scrape_async.py: Uses asycronous processing with aiohttp and asyncio. (takes about 10 seconds)
 
 
 Sample email output:
