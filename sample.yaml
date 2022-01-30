@@ -4,3 +4,5 @@ SMTP_SERVER: your_smtp_server
 SMTP_PORT: your_smtp_port
 emailuser: your_email_login
 emailpassword: your_email_password
+emailto: your_to_email_address
+emailfrom: your_from_email_address

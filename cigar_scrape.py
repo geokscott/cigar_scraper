@@ -21,8 +21,8 @@ with open(config_file) as file:
     config = yaml.load(file, Loader=yaml.FullLoader)
 
 # Setup email
-emailto = ["george@techi.net"]
-emailfrom = "george@techi.net"
+emailto = config['emailto']
+emailfrom = config['emailfrom']
 SMTP_SERVER = config['SMTP_SERVER']
 SMTP_PORT = config['SMTP_PORT']
 emailuser = config['emailuser']
