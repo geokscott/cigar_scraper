@@ -17,9 +17,13 @@ import time
 start_time = time.time()
 
 config_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'config.yaml')
-with open(config_file) as file:
-    config = yaml.load(file, Loader=yaml.FullLoader)
-
+try:
+    with open(config_file) as file:
+        config = yaml.load(file, Loader=yaml.FullLoader)
+except:
+    print("Your config.yaml file is missing!")
+    quit()
+    
 # Setup email
 emailto = config['emailto']
 emailfrom = config['emailfrom']
