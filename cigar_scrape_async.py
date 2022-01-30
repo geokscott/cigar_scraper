@@ -162,17 +162,27 @@ async def format_output(cigars):
     return html
 
 
+async def get_page(session, url):
+    cigar_list = []
+    async with session.get(url) as response:
+        html = await response.text()
+        cigar_list = await process_page(html)
+        return cigar_list
+
+
 async def main():
 
     cigars = []
     async with aiohttp.ClientSession() as session:
+        tasks = []
         for page in pages:
             url = f'{base_url}{page}'
-            async with session.get(url) as response:
-                html = await response.text()
-                cigar_list = await process_page(html)
-                for cigar in cigar_list:
-                    cigars.append(cigar)
+            tasks.append(asyncio.ensure_future(get_page(session, url)))
+
+        miltiple_cigar_lists = await asyncio.gather(*tasks)
+        for cigar_list in miltiple_cigar_lists:
+            for cigar in cigar_list:
+                cigars.append(cigar)
 
         html_results = await format_output(cigars)
         
