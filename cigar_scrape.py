@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/home/george/env/bin/python
 # encoding: utf-8
 
 import requests
