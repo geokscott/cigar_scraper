@@ -200,4 +200,5 @@ async def main():
                 
 if __name__ == '__main__':
     asyncio.run(main())
-    print("--- %s seconds ---" % (time.time() - start_time))
+    runtime = time.time() - start_time
+    print(f'Created: {datetime.today()} - Runtime: {runtime} seconds'

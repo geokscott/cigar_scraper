@@ -198,4 +198,5 @@ if __name__ == '__main__':
         s.sendmail(emailfrom, emailto, msg.as_string())
         s.close()
     
-        print("--- %s seconds ---" % (time.time() - start_time))
+        runtime = time.time() - start_time
+        print(f'Created: {datetime.today()} - Runtime: {runtime} seconds'
