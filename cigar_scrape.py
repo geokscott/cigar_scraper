@@ -199,4 +199,4 @@ if __name__ == '__main__':
         s.close()
     
         runtime = time.time() - start_time
-        print(f'Created: {datetime.today()} - Runtime: {runtime} seconds'
+        print(f'Created: {datetime.today()} - Runtime: {runtime} seconds')
