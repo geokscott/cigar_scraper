@@ -15,6 +15,7 @@ import os
 import time
 
 start_time = time.time()
+timestamp = datetime.now().strftime("%m/%d/%Y %H:%M")
 
 config_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'config.yaml')
 try:
@@ -199,4 +200,4 @@ if __name__ == '__main__':
         s.close()
     
         runtime = time.time() - start_time
-        print(f'Created: {datetime.today()} - Runtime: {runtime} seconds')
+        print(f'Created: {timestamp} - Runtime: {runtime} seconds')

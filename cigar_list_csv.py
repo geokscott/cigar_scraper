@@ -1,5 +1,8 @@
-#!/home/george/env/bin/python
-# encoding: utf-8
+# cigar_list.py
+# This is a simple scraper, no multi threading or async operations
+# This builds a CSV file of all cigars scrapped from specific list of web pages (per the pages[] list in the code) by: brand, name, & size
+# Running the script multiple times will build on the CSV list and not create duplicates.
+# I run this daily to compile a list of all cigars that ever show up on the website.
 
 import requests
 import bs4
@@ -7,8 +10,10 @@ from datetime import datetime
 import csv
 import itertools
 import sys
+
 import os
 
+timestamp = datetime.now().strftime("%m/%d/%Y %H:%M")
 
 def cleanup(x):
     """
@@ -97,10 +102,14 @@ for page in pages:
         print(e)
 
 # Open existing file for comparison
-with open(file_name, 'r', newline='', encoding='ISO-8859-1') as existing_file:
-    reader = csv.reader(existing_file)
-    existing_rows = list(reader)
-
+try:
+    with open(file_name, 'r', newline='', encoding='ISO-8859-1') as existing_file:
+        reader = csv.reader(existing_file)
+        existing_rows = list(reader)
+except:
+    #file does not exist
+    existing_rows = []
+        
 # Combine the existing rows with what was just scrapped, sort, then remove dups
 combined_rows = existing_rows + rows
 combined_rows.sort()
@@ -113,4 +122,4 @@ with open(file_name, 'w', newline='', encoding='ISO-8859-1') as csvfile:
         writer.writerow(row)
 
 total_lines = number_of_lines(file_name)
-print(f'File created on {datetime.today()} with {total_lines} lines.')
+print(f'File created {timestamp} with {total_lines} lines.')
