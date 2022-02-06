@@ -10,9 +10,9 @@ from datetime import datetime
 import csv
 import itertools
 import sys
-
 import os
 
+start_time = time.time()
 timestamp = datetime.now().strftime("%m/%d/%Y %H:%M")
 
 def cleanup(x):
@@ -22,7 +22,7 @@ def cleanup(x):
     try:
         x = x.replace("Length (in inches):", "L:")
         x = x.replace("LENGTH:", "L:")
-        x = x.replace("Ring Guage:", "RG:")
+        x = x.replace("ring gauge:", "RG:")
         x = x.replace("Ring Gauge:", "RG:")
         x = x.replace("RING GAUGE:", "RG:")
         x = x.replace("No Discounts Apply", "")
@@ -122,4 +122,6 @@ with open(file_name, 'w', newline='', encoding='ISO-8859-1') as csvfile:
         writer.writerow(row)
 
 total_lines = number_of_lines(file_name)
-print(f'File created {timestamp} with {total_lines} lines.')
+runtime = round(time.time() - start_time, 2)
+print(f'File created: {timestamp} with {total_lines} lines - Runtime: {runtime}')
+
