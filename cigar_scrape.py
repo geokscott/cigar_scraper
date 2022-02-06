@@ -86,7 +86,7 @@ def cleanup(x):
         x = x.replace("box", "Box")
         x = x.replace("length (in inches):", "L:")
         x = x.replace("length:", "L:")
-        x = x.replace("ring guage:", "RG:")
+        x = x.replace("ring gauge:", "RG:")
         x = ' '.join([line.strip() for line in x.strip().splitlines()])
     except:
         x = 'clean-up function error!'
@@ -199,5 +199,5 @@ if __name__ == '__main__':
         s.sendmail(emailfrom, emailto, msg.as_string())
         s.close()
     
-        runtime = time.time() - start_time
+        runtime = round(time.time() - start_time, 2)
         print(f'Created: {timestamp} - Runtime: {runtime} seconds')

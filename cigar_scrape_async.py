@@ -85,7 +85,7 @@ async def cleanup(x):
         x = x.replace("box", "Box")
         x = x.replace("length (in inches):", "L:")
         x = x.replace("length:", "L:")
-        x = x.replace("ring guage:", "RG:")
+        x = x.replace("ring gauge:", "RG:")
         x = ' '.join([line.strip() for line in x.strip().splitlines()])
     except:
         x = 'clean-up function error!'
@@ -201,5 +201,5 @@ async def main():
                 
 if __name__ == '__main__':
     asyncio.run(main())
-    runtime = time.time() - start_time
+    runtime = round(time.time() - start_time, 2)
     print(f'Created: {timestamp} - Runtime: {runtime} seconds')
