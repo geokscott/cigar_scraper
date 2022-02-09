@@ -113,19 +113,14 @@ def process_page(response):
             'span',  {'class': ['product_header', 'product_header_W']}))
         # Iterate through products
         for i in range(0, total_product_tags):
-            name = soup.find_all(
-                'span', {'class': ['product_header', 'product_header_W']})[i].get_text()
+            name = soup.find_all('span', {'class': ['product_header', 'product_header_W']})[i].get_text()
             url = soup.find('form', id='frmDetails').get('action')
             description = f'<a href={base_url}{url}>{name}</a>'
-            price = cleanup(soup.find_all(
-                'span', class_='redtxt1_strikeout')[i].get_text())
-            size = cleanup(soup.find_all('td', class_='nortxt')[
-                           i].find('div', class_='fsize11').get_text())
-            quantity = cleanup(soup.find_all('tr', class_='nortxt')[
-                               i].find('td', class_='fsize11').get_text())
+            price = cleanup(soup.find_all('span', class_='redtxt1_strikeout')[i].get_text())
+            size = cleanup(soup.find_all('td', class_='nortxt')[i].find('div', class_='fsize11').get_text())
+            quantity = cleanup(soup.find_all('tr', class_='nortxt')[i].find('td', class_='fsize11').get_text())
             try:
-                sale_price = cleanup(soup.find_all(
-                    'td', class_='pricetxt')[i].get_text())
+                sale_price = cleanup(soup.find_all('td', class_='pricetxt')[i].get_text())
                 save = (float(price) - float(sale_price)) / float(price)
                 save = f'{save:.0%}'
             except:
@@ -133,8 +128,7 @@ def process_page(response):
                 save = 0
             # if "red" price if found, it's a sale price, include it in the return
             if price:
-                cigars.append([sale_price, price, save,
-                               description, quantity, size])
+                cigars.append([sale_price, price, save, description, quantity, size])
 
     except Exception as e:
         # this website didn't respond or the page had errors
