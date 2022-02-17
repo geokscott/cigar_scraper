@@ -11,6 +11,7 @@ import csv
 import itertools
 import sys
 import os
+import time
 
 start_time = time.time()
 timestamp = datetime.now().strftime("%m/%d/%Y %H:%M")
