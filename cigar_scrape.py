@@ -39,7 +39,7 @@ msg['To'] = ','.join(emailto)
 
 # Define what will be scraped
 # CoH website
-base_url = "https://www.cigarsofhabanos.com/"
+base_url = "https://www.cohcigars.com/"
 
 # pages we are going to scrape
 pages = ['cigars-bolivar',

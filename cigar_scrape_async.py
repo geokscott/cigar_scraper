@@ -39,37 +39,39 @@ msg['To'] = ','.join(emailto)
 
 # Define what will be scraped
 # CoH website
-base_url = "https://www.cigarsofhabanos.com/"
+base_url = "https://www.cohcigars.com/"
 
 # pages we are going to scrape
 pages = ['cigars-bolivar',
          'cigars-cohiba',
-         'cigars-cuaba',
          'cigars-diplomaticos',
          'cigars-el-rey-del-mundo',
-         'cigars-fonseca',
-         'cigars-guantanamera',
          'cigars-h.upmann',
          'cigars-hoyo-de-monterrey',
-         'cigars-jose-l.-piedra',
          'cigars-juan-lopez',
-         'cigars-la-flor-de-cano',
          'cigars-la-gloria-cubana',
          'cigars-montecristo',
-         'cigars-partagas',
          'cigars-por-larranaga',
          'cigars-punch',
-         'cigars-quai-dorsay',
-         'cigars-quintero-y-hermano',
-         'cigars-rafael-gonzalez',
          'cigars-ramon-allones',
-         'cigars-romeo-y-julieta',
          'cigars-saint-luis-rey',
          'cigars-san-cristobal-de-la-habana',
-         'cigars-sancho-panza',
          'cigars-trinidad',
-         'cigars-vegas-robaina',
-         'cigars-vegueros']
+         'cigars-vegas-robaina'
+         ]
+
+#         'cigars-cuaba',
+#         'cigars-fonseca',
+#         'cigars-guantanamera',
+#         'cigars-jose-l.-piedra',
+#         'cigars-la-flor-de-cano',
+#         'cigars-partagas',
+#         'cigars-quai-dorsay',
+#         'cigars-quintero-y-hermano',
+#         'cigars-rafael-gonzalez',
+#         'cigars-romeo-y-julieta',
+#         'cigars-sancho-panza',
+#         'cigars-vegueros',
 
 async def cleanup(x):
     """
@@ -144,7 +146,7 @@ async def format_output(cigars):
     for cigar in cigars:
         # Toggle line color
         if color == 'lightcyan':
-            color = 'cyan'
+            color = 'lightgray'
         else:
             color = 'lightcyan'
         html += f"""<tr>
@@ -184,7 +186,7 @@ async def main():
                 cigars.append(cigar)
 
         html_results = await format_output(cigars)
-        
+
         # Send email
         part2 = MIMEText(html_results, 'html')
         msg.attach(part2)
@@ -192,7 +194,7 @@ async def main():
         s.login(emailuser, emailpassword)
         s.sendmail(emailfrom, emailto, msg.as_string())
         s.close()
-                
+
 if __name__ == '__main__':
     asyncio.run(main())
     runtime = round(time.time() - start_time, 2)
