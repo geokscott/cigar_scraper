@@ -140,7 +140,7 @@ def process_page(response):
 def format_output(cigars):
 
     # Build HTML email Header
-    html = "<p><a href=https://www.cigarsofhabanos.com/>Cigars of Habanos</a></p>"
+    html = f'<p><a href={base_url}>Cigars of Habanos</a></p>'
 
     html += """<table border=1 cellspacing=0 cellpadding=2>
         <tr>

@@ -4,5 +4,5 @@ SMTP_SERVER: your_smtp_server
 SMTP_PORT: your_smtp_port
 emailuser: your_email_login
 emailpassword: your_email_password
-emailto: your_to_email_address
-emailfrom: your_from_email_address
+emailto: ['your_TO_email_address', 'another_email', 'as_many_as_you_like']
+emailfrom: 'your_FROM_name'
