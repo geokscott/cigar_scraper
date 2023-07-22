@@ -13,6 +13,9 @@ import concurrent.futures
 import yaml
 import os
 import time
+import locale
+
+locale.setlocale(locale.LC_ALL, '')
 
 start_time = time.time()
 timestamp = datetime.now().strftime("%m/%d/%Y %H:%M")
@@ -85,14 +88,32 @@ async def cleanup(x):
         x = x.replace("$", "")
         x = x.replace("no discounts apply", "")
         x = x.replace("slb cabinet of", "SLB")
-        x = x.replace("box", "Box")
         x = x.replace("length (in inches):", "L:")
         x = x.replace("length:", "L:")
         x = x.replace("ring gauge:", "RG:")
+        x = x.replace(" ", "")
+        x = x.replace("box", " Box")
         x = ' '.join([line.strip() for line in x.strip().splitlines()])
     except:
         x = 'clean-up function error!'
     return x
+
+def convert_total(x):
+    """
+    Returns calculated total number of cigars
+    """
+    try:
+        x = x.lower()
+        x = x.replace("box", "")
+        x = x.replace(" ", "")
+        y = x.split("x")
+        if len(y) > 1:
+            x = float(y[0]) * float(y[1])
+        else:
+            x = float(y[0])
+    except:
+        x = 'clean-up function error!'
+    return int(x)
 
 
 async def process_page(response):
@@ -110,6 +131,7 @@ async def process_page(response):
             price = await cleanup(soup.find_all('span', class_='redtxt1_strikeout')[i].get_text())
             size = await cleanup(soup.find_all('td', class_='nortxt')[i].find('div', class_='fsize11').get_text())
             quantity = await cleanup(soup.find_all('tr', class_='nortxt')[i].find('td', class_='fsize11').get_text())
+            total = convert_total(quantity)
             try:
                 sale_price = await cleanup(soup.find_all('td', class_='pricetxt')[i].get_text())
                 save = (float(price) - float(sale_price)) / float(price)
@@ -117,13 +139,14 @@ async def process_page(response):
             except:
                 sale_price = 0
                 save = 0
+            price_ea = locale.currency(float(sale_price) / total, grouping=True)
             # if "red" price if found, it's a sale price, include it in the return
             if price:
-                cigars.append([sale_price, price, save, description, quantity, size])
+                cigars.append([sale_price, price, price_ea, save, description, quantity, total, size])
 
     except Exception as e:
         # this website didn't respond or the page had errors
-        cigars.append(['', '', '', {e}, '', ''])
+        cigars.append(['', '', '', '', {e}, '', '', ''])
 
     return cigars
 
@@ -137,9 +160,11 @@ async def format_output(cigars):
         <tr>
         <th style=background-color:gray>Sale</th>
         <th style=background-color:gray>Price</th>
+        <th style=background-color:gray>Price ea</th>
         <th style=background-color:gray>Save</th>
         <th style=background-color:gray>Description</th>
         <th style=background-color:gray>Quantity</th>
+        <th style=background-color:gray>Total</th>
         <th style=background-color:gray>Size</th>
         </tr>"""
 
@@ -157,6 +182,8 @@ async def format_output(cigars):
                 <td style=background-color:{color}>{cigar[3]}</td>
                 <td style=background-color:{color}>{cigar[4]}</td>
                 <td style=background-color:{color}>{cigar[5]}</td>
+                <td style=background-color:{color}>{cigar[6]}</td>
+                <td style=background-color:{color}>{cigar[7]}</td>
                 </tr>"""
 
     html += "</table>"
